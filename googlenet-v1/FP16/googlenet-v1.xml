@@ -1,0 +1,6345 @@
+<?xml version="1.0" ?>
+<net name="GoogleNet" version="10">
+	<layers>
+		<layer id="0" name="data" type="Parameter" version="opset1">
+			<data shape="1, 3, 224, 224" element_type="f16"/>
+			<output>
+				<port id="0" precision="FP16" names="data">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>224</dim>
+					<dim>224</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="1" name="data/mean_input_port_1/value10059412" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 3, 1, 1" offset="0" size="6"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="2" name="data/mean" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>224</dim>
+					<dim>224</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>224</dim>
+					<dim>224</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="3" name="228" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 3, 7, 7" offset="6" size="18816"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>3</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="4" name="conv1/7x7_s2/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="2, 2" dilations="1, 1" pads_begin="3, 3" pads_end="3, 3" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>224</dim>
+					<dim>224</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>3</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="5" name="conv1/7x7_s2/Dims2504" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="18822" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="6" name="conv1/7x7_s2" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="conv1/7x7_s2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="7" name="conv1/relu_7x7" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="conv1/7x7_s2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="8" name="pool1/3x3_s2" type="MaxPool" version="opset1">
+			<data strides="2, 2" pads_begin="0, 0" pads_end="0, 0" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>112</dim>
+					<dim>112</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="pool1/3x3_s2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="9" name="pool1/norm16321/value63239271" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="18950" size="8"/>
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="10" name="pool1/norm16321" type="LRN" version="opset1">
+			<data alpha="9.9999997473787516e-05" beta="0.75" bias="1" size="5"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="pool1/norm1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="11" name="252" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 64, 1, 1" offset="18958" size="8192"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="12" name="conv2/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="13" name="conv2/3x3_reduce/Dims2438" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="27150" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="14" name="conv2/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="conv2/3x3_reduce">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="15" name="conv2/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="conv2/3x3_reduce">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="16" name="206" type="Const" version="opset1">
+			<data element_type="f16" shape="192, 64, 3, 3" offset="27278" size="221184"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>192</dim>
+					<dim>64</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="17" name="conv2/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>192</dim>
+					<dim>64</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="18" name="conv2/3x3/Dims2306" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 192, 1, 1" offset="248462" size="384"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="19" name="conv2/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="conv2/3x3">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="20" name="conv2/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="conv2/3x3">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="21" name="conv2/norm26325/value63279238" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="18950" size="8"/>
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="22" name="conv2/norm26325" type="LRN" version="opset1">
+			<data alpha="9.9999997473787516e-05" beta="0.75" bias="1" size="5"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="conv2/norm2">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="23" name="pool2/3x3_s2" type="MaxPool" version="opset1">
+			<data strides="2, 2" pads_begin="0, 0" pads_end="0, 0" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>56</dim>
+					<dim>56</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="pool2/3x3_s2">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="24" name="148" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 192, 1, 1" offset="248846" size="24576"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="25" name="inception_3a/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="26" name="inception_3a/1x1/Dims2330" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="273422" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="27" name="inception_3a/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/1x1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="28" name="inception_3a/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/1x1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="29" name="218" type="Const" version="opset1">
+			<data element_type="f16" shape="96, 192, 1, 1" offset="273550" size="36864"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>96</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="30" name="inception_3a/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>96</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="31" name="inception_3a/3x3_reduce/Dims2408" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 96, 1, 1" offset="310414" size="192"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="32" name="inception_3a/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/3x3_reduce">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="33" name="inception_3a/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/3x3_reduce">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="34" name="196" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 96, 3, 3" offset="310606" size="221184"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>96</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="35" name="inception_3a/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>96</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="36" name="inception_3a/3x3/Dims2384" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="531790" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="37" name="inception_3a/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/3x3">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="38" name="inception_3a/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/3x3">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="39" name="254" type="Const" version="opset1">
+			<data element_type="f16" shape="16, 192, 1, 1" offset="532046" size="6144"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>16</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="40" name="inception_3a/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>16</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="41" name="inception_3a/5x5_reduce/Dims2270" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 16, 1, 1" offset="538190" size="32"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="42" name="inception_3a/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/5x5_reduce">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="43" name="inception_3a/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/5x5_reduce">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="44" name="178" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 16, 5, 5" offset="538222" size="25600"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>16</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="45" name="inception_3a/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>16</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="46" name="inception_3a/5x5/Dims2198" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="563822" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="47" name="inception_3a/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/5x5">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="48" name="inception_3a/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/5x5">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="49" name="inception_3a/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/pool">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="50" name="166" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 192, 1, 1" offset="563886" size="12288"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="51" name="inception_3a/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="52" name="inception_3a/pool_proj/Dims2294" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="576174" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="53" name="inception_3a/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3a/pool_proj">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="54" name="inception_3a/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3a/pool_proj">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="55" name="inception_3a/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_3a/output">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="56" name="200" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 256, 1, 1" offset="576238" size="65536"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="57" name="inception_3b/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="58" name="inception_3b/1x1/Dims2228" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="641774" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="59" name="inception_3b/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/1x1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="60" name="inception_3b/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/1x1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="61" name="236" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 256, 1, 1" offset="642030" size="65536"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="62" name="inception_3b/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="63" name="inception_3b/3x3_reduce/Dims2426" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="707566" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="64" name="inception_3b/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/3x3_reduce">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="65" name="inception_3b/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/3x3_reduce">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="66" name="198" type="Const" version="opset1">
+			<data element_type="f16" shape="192, 128, 3, 3" offset="707822" size="442368"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>192</dim>
+					<dim>128</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="67" name="inception_3b/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>192</dim>
+					<dim>128</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="68" name="inception_3b/3x3/Dims2222" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 192, 1, 1" offset="1150190" size="384"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="69" name="inception_3b/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/3x3">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="70" name="inception_3b/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/3x3">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="71" name="180" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 256, 1, 1" offset="1150574" size="16384"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="72" name="inception_3b/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="73" name="inception_3b/5x5_reduce/Dims2366" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="1166958" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="74" name="inception_3b/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="75" name="inception_3b/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="76" name="238" type="Const" version="opset1">
+			<data element_type="f16" shape="96, 32, 5, 5" offset="1167022" size="153600"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>96</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="77" name="inception_3b/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>96</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="78" name="inception_3b/5x5/Dims2312" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 96, 1, 1" offset="1320622" size="192"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="79" name="inception_3b/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/5x5">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="80" name="inception_3b/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/5x5">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="81" name="inception_3b/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/pool">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="82" name="232" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 256, 1, 1" offset="1320814" size="32768"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="83" name="inception_3b/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="84" name="inception_3b/pool_proj/Dims2510" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="1353582" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="85" name="inception_3b/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_3b/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="86" name="inception_3b/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_3b/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="87" name="inception_3b/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_3b/output">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="88" name="pool3/3x3_s2" type="MaxPool" version="opset1">
+			<data strides="2, 2" pads_begin="0, 0" pads_end="0, 0" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>28</dim>
+					<dim>28</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="pool3/3x3_s2">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="89" name="250" type="Const" version="opset1">
+			<data element_type="f16" shape="192, 480, 1, 1" offset="1353710" size="184320"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>192</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="90" name="inception_4a/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>192</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="91" name="inception_4a/1x1/Dims2264" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 192, 1, 1" offset="1538030" size="384"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="92" name="inception_4a/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/1x1">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="93" name="inception_4a/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/1x1">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="94" name="240" type="Const" version="opset1">
+			<data element_type="f16" shape="96, 480, 1, 1" offset="1538414" size="92160"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>96</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="95" name="inception_4a/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>96</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="96" name="inception_4a/3x3_reduce/Dims2522" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 96, 1, 1" offset="1630574" size="192"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="97" name="inception_4a/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/3x3_reduce">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="98" name="inception_4a/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/3x3_reduce">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="99" name="162" type="Const" version="opset1">
+			<data element_type="f16" shape="208, 96, 3, 3" offset="1630766" size="359424"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>208</dim>
+					<dim>96</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="100" name="inception_4a/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>96</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>208</dim>
+					<dim>96</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="101" name="inception_4a/3x3/Dims2354" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 208, 1, 1" offset="1990190" size="416"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="102" name="inception_4a/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/3x3">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="103" name="inception_4a/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/3x3">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="104" name="146" type="Const" version="opset1">
+			<data element_type="f16" shape="16, 480, 1, 1" offset="1990606" size="15360"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>16</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="105" name="inception_4a/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>16</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="106" name="inception_4a/5x5_reduce/Dims2324" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 16, 1, 1" offset="2005966" size="32"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="107" name="inception_4a/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/5x5_reduce">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="108" name="inception_4a/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/5x5_reduce">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="109" name="204" type="Const" version="opset1">
+			<data element_type="f16" shape="48, 16, 5, 5" offset="2005998" size="38400"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>48</dim>
+					<dim>16</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="110" name="inception_4a/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>48</dim>
+					<dim>16</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="111" name="inception_4a/5x5/Dims2486" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 48, 1, 1" offset="2044398" size="96"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="112" name="inception_4a/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/5x5">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="113" name="inception_4a/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/5x5">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="114" name="inception_4a/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/pool">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="115" name="224" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 480, 1, 1" offset="2044494" size="61440"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="116" name="inception_4a/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>480</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>480</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="117" name="inception_4a/pool_proj/Dims2498" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="2105934" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="118" name="inception_4a/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4a/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="119" name="inception_4a/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4a/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="120" name="inception_4a/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>208</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_4a/output">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="121" name="248" type="Const" version="opset1">
+			<data element_type="f16" shape="160, 512, 1, 1" offset="2106062" size="163840"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>160</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="122" name="inception_4b/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>160</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="123" name="inception_4b/1x1/Dims2528" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 160, 1, 1" offset="2269902" size="320"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="124" name="inception_4b/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/1x1">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="125" name="inception_4b/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/1x1">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="126" name="184" type="Const" version="opset1">
+			<data element_type="f16" shape="112, 512, 1, 1" offset="2270222" size="114688"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>112</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="127" name="inception_4b/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>112</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="128" name="inception_4b/3x3_reduce/Dims2474" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 112, 1, 1" offset="2384910" size="224"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="129" name="inception_4b/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/3x3_reduce">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="130" name="inception_4b/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/3x3_reduce">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="131" name="158" type="Const" version="opset1">
+			<data element_type="f16" shape="224, 112, 3, 3" offset="2385134" size="451584"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>224</dim>
+					<dim>112</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="132" name="inception_4b/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>224</dim>
+					<dim>112</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="133" name="inception_4b/3x3/Dims2282" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 224, 1, 1" offset="2836718" size="448"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="134" name="inception_4b/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/3x3">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="135" name="inception_4b/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/3x3">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="136" name="156" type="Const" version="opset1">
+			<data element_type="f16" shape="24, 512, 1, 1" offset="2837166" size="24576"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>24</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="137" name="inception_4b/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>24</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="138" name="inception_4b/5x5_reduce/Dims2348" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 24, 1, 1" offset="2861742" size="48"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="139" name="inception_4b/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/5x5_reduce">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="140" name="inception_4b/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/5x5_reduce">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="141" name="190" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 24, 5, 5" offset="2861790" size="76800"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="142" name="inception_4b/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="143" name="inception_4b/5x5/Dims2210" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="2938590" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="144" name="inception_4b/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="145" name="inception_4b/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="146" name="inception_4b/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/pool">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="147" name="208" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 512, 1, 1" offset="2938718" size="65536"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="148" name="inception_4b/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="149" name="inception_4b/pool_proj/Dims2396" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="3004254" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="150" name="inception_4b/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4b/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="151" name="inception_4b/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4b/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="152" name="inception_4b/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>224</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_4b/output">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="153" name="202" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 512, 1, 1" offset="3004382" size="131072"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="154" name="inception_4c/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="155" name="inception_4c/1x1/Dims2390" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="3135454" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="156" name="inception_4c/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/1x1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="157" name="inception_4c/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/1x1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="158" name="258" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 512, 1, 1" offset="3135710" size="131072"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="159" name="inception_4c/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="160" name="inception_4c/3x3_reduce/Dims2276" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="3266782" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="161" name="inception_4c/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/3x3_reduce">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="162" name="inception_4c/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/3x3_reduce">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="163" name="234" type="Const" version="opset1">
+			<data element_type="f16" shape="256, 128, 3, 3" offset="3267038" size="589824"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>256</dim>
+					<dim>128</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="164" name="inception_4c/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>256</dim>
+					<dim>128</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="165" name="inception_4c/3x3/Dims2516" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 256, 1, 1" offset="3856862" size="512"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="166" name="inception_4c/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/3x3">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="167" name="inception_4c/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/3x3">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="168" name="226" type="Const" version="opset1">
+			<data element_type="f16" shape="24, 512, 1, 1" offset="3857374" size="24576"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>24</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="169" name="inception_4c/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>24</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="170" name="inception_4c/5x5_reduce/Dims2252" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 24, 1, 1" offset="3881950" size="48"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="171" name="inception_4c/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/5x5_reduce">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="172" name="inception_4c/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/5x5_reduce">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="173" name="164" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 24, 5, 5" offset="3881998" size="76800"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="174" name="inception_4c/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>24</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="175" name="inception_4c/5x5/Dims2456" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="3958798" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="176" name="inception_4c/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="177" name="inception_4c/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="178" name="inception_4c/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/pool">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="179" name="220" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 512, 1, 1" offset="3958926" size="65536"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="180" name="inception_4c/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="181" name="inception_4c/pool_proj/Dims2246" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="4024462" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="182" name="inception_4c/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4c/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="183" name="inception_4c/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4c/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="184" name="inception_4c/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_4c/output">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="185" name="194" type="Const" version="opset1">
+			<data element_type="f16" shape="112, 512, 1, 1" offset="4024590" size="114688"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>112</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="186" name="inception_4d/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>112</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="187" name="inception_4d/1x1/Dims2216" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 112, 1, 1" offset="4139278" size="224"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="188" name="inception_4d/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/1x1">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="189" name="inception_4d/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/1x1">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="190" name="174" type="Const" version="opset1">
+			<data element_type="f16" shape="144, 512, 1, 1" offset="4139502" size="147456"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>144</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="191" name="inception_4d/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>144</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="192" name="inception_4d/3x3_reduce/Dims2300" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 144, 1, 1" offset="4286958" size="288"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="193" name="inception_4d/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/3x3_reduce">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="194" name="inception_4d/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/3x3_reduce">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="195" name="260" type="Const" version="opset1">
+			<data element_type="f16" shape="288, 144, 3, 3" offset="4287246" size="746496"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>288</dim>
+					<dim>144</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="196" name="inception_4d/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>144</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>288</dim>
+					<dim>144</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="197" name="inception_4d/3x3/Dims2450" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 288, 1, 1" offset="5033742" size="576"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="198" name="inception_4d/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/3x3">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="199" name="inception_4d/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/3x3">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="200" name="172" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 512, 1, 1" offset="5034318" size="32768"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="201" name="inception_4d/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="202" name="inception_4d/5x5_reduce/Dims2192" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="5067086" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="203" name="inception_4d/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="204" name="inception_4d/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="205" name="244" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 32, 5, 5" offset="5067150" size="102400"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="206" name="inception_4d/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="207" name="inception_4d/5x5/Dims2258" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="5169550" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="208" name="inception_4d/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="209" name="inception_4d/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/5x5">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="210" name="inception_4d/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/pool">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="211" name="170" type="Const" version="opset1">
+			<data element_type="f16" shape="64, 512, 1, 1" offset="5169678" size="65536"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="212" name="inception_4d/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>512</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>64</dim>
+					<dim>512</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="213" name="inception_4d/pool_proj/Dims2462" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 64, 1, 1" offset="5235214" size="128"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="214" name="inception_4d/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4d/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="215" name="inception_4d/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4d/pool_proj">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="216" name="inception_4d/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>112</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>288</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_4d/output">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="217" name="160" type="Const" version="opset1">
+			<data element_type="f16" shape="256, 528, 1, 1" offset="5235342" size="270336"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>256</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="218" name="inception_4e/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>256</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="219" name="inception_4e/1x1/Dims2288" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 256, 1, 1" offset="5505678" size="512"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="220" name="inception_4e/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/1x1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="221" name="inception_4e/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/1x1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="222" name="176" type="Const" version="opset1">
+			<data element_type="f16" shape="160, 528, 1, 1" offset="5506190" size="168960"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>160</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="223" name="inception_4e/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>160</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="224" name="inception_4e/3x3_reduce/Dims2468" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 160, 1, 1" offset="5675150" size="320"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="225" name="inception_4e/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/3x3_reduce">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="226" name="inception_4e/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/3x3_reduce">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="227" name="230" type="Const" version="opset1">
+			<data element_type="f16" shape="320, 160, 3, 3" offset="5675470" size="921600"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>320</dim>
+					<dim>160</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="228" name="inception_4e/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>320</dim>
+					<dim>160</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="229" name="inception_4e/3x3/Dims2420" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 320, 1, 1" offset="6597070" size="640"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="230" name="inception_4e/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/3x3">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="231" name="inception_4e/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/3x3">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="232" name="246" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 528, 1, 1" offset="6597710" size="33792"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="233" name="inception_4e/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="234" name="inception_4e/5x5_reduce/Dims2318" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="6631502" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="235" name="inception_4e/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="236" name="inception_4e/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="237" name="256" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 32, 5, 5" offset="6631566" size="204800"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="238" name="inception_4e/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="239" name="inception_4e/5x5/Dims2444" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="6836366" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="240" name="inception_4e/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="241" name="inception_4e/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="242" name="inception_4e/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/pool">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="243" name="222" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 528, 1, 1" offset="6836622" size="135168"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="244" name="inception_4e/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>528</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>528</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="245" name="inception_4e/pool_proj/Dims2414" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="6971790" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="246" name="inception_4e/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_4e/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="247" name="inception_4e/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_4e/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="248" name="inception_4e/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_4e/output">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="249" name="pool4/3x3_s2" type="MaxPool" version="opset1">
+			<data strides="2, 2" pads_begin="0, 0" pads_end="0, 0" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>14</dim>
+					<dim>14</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="pool4/3x3_s2">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="250" name="186" type="Const" version="opset1">
+			<data element_type="f16" shape="256, 832, 1, 1" offset="6972046" size="425984"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>256</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="251" name="inception_5a/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>256</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="252" name="inception_5a/1x1/Dims2480" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 256, 1, 1" offset="7398030" size="512"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="253" name="inception_5a/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/1x1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="254" name="inception_5a/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/1x1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="255" name="188" type="Const" version="opset1">
+			<data element_type="f16" shape="160, 832, 1, 1" offset="7398542" size="266240"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>160</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="256" name="inception_5a/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>160</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="257" name="inception_5a/3x3_reduce/Dims2204" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 160, 1, 1" offset="7664782" size="320"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="258" name="inception_5a/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/3x3_reduce">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="259" name="inception_5a/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/3x3_reduce">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="260" name="212" type="Const" version="opset1">
+			<data element_type="f16" shape="320, 160, 3, 3" offset="7665102" size="921600"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>320</dim>
+					<dim>160</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="261" name="inception_5a/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>160</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>320</dim>
+					<dim>160</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="262" name="inception_5a/3x3/Dims2234" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 320, 1, 1" offset="8586702" size="640"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="263" name="inception_5a/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/3x3">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="264" name="inception_5a/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/3x3">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="265" name="182" type="Const" version="opset1">
+			<data element_type="f16" shape="32, 832, 1, 1" offset="8587342" size="53248"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>32</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="266" name="inception_5a/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="267" name="inception_5a/5x5_reduce/Dims2372" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 32, 1, 1" offset="8640590" size="64"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="268" name="inception_5a/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="269" name="inception_5a/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/5x5_reduce">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="270" name="192" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 32, 5, 5" offset="8640654" size="204800"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="271" name="inception_5a/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>32</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="272" name="inception_5a/5x5/Dims2378" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="8845454" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="273" name="inception_5a/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="274" name="inception_5a/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="275" name="inception_5a/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/pool">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="276" name="216" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 832, 1, 1" offset="8845710" size="212992"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="277" name="inception_5a/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="278" name="inception_5a/pool_proj/Dims2240" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="9058702" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="279" name="inception_5a/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5a/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="280" name="inception_5a/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5a/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="281" name="inception_5a/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>320</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_5a/output">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="282" name="210" type="Const" version="opset1">
+			<data element_type="f16" shape="384, 832, 1, 1" offset="9058958" size="638976"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>384</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="283" name="inception_5b/1x1/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>384</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="284" name="inception_5b/1x1/Dims2492" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 384, 1, 1" offset="9697934" size="768"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="285" name="inception_5b/1x1" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/1x1">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="286" name="inception_5b/relu_1x1" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/1x1">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="287" name="152" type="Const" version="opset1">
+			<data element_type="f16" shape="192, 832, 1, 1" offset="9698702" size="319488"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>192</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="288" name="inception_5b/3x3_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>192</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="289" name="inception_5b/3x3_reduce/Dims2336" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 192, 1, 1" offset="10018190" size="384"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="290" name="inception_5b/3x3_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/3x3_reduce">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="291" name="inception_5b/relu_3x3_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/3x3_reduce">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="292" name="242" type="Const" version="opset1">
+			<data element_type="f16" shape="384, 192, 3, 3" offset="10018574" size="1327104"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>384</dim>
+					<dim>192</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="293" name="inception_5b/3x3/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="1, 1" pads_end="1, 1" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>192</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>384</dim>
+					<dim>192</dim>
+					<dim>3</dim>
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="294" name="inception_5b/3x3/Dims2432" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 384, 1, 1" offset="11345678" size="768"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="295" name="inception_5b/3x3" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/3x3">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="296" name="inception_5b/relu_3x3" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/3x3">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="297" name="168" type="Const" version="opset1">
+			<data element_type="f16" shape="48, 832, 1, 1" offset="11346446" size="79872"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>48</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="298" name="inception_5b/5x5_reduce/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>48</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="299" name="inception_5b/5x5_reduce/Dims2360" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 48, 1, 1" offset="11426318" size="96"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="300" name="inception_5b/5x5_reduce" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/5x5_reduce">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="301" name="inception_5b/relu_5x5_reduce" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/5x5_reduce">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="302" name="214" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 48, 5, 5" offset="11426414" size="307200"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>48</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="303" name="inception_5b/5x5/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="2, 2" pads_end="2, 2" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>48</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>48</dim>
+					<dim>5</dim>
+					<dim>5</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="304" name="inception_5b/5x5/Dims2402" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="11733614" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="305" name="inception_5b/5x5" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="306" name="inception_5b/relu_5x5" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/5x5">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="307" name="inception_5b/pool" type="MaxPool" version="opset1">
+			<data strides="1, 1" pads_begin="1, 1" pads_end="1, 1" kernel="3, 3" rounding_type="ceil" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/pool">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="308" name="154" type="Const" version="opset1">
+			<data element_type="f16" shape="128, 832, 1, 1" offset="11733870" size="212992"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>128</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="309" name="inception_5b/pool_proj/WithoutBiases" type="Convolution" version="opset1">
+			<data strides="1, 1" dilations="1, 1" pads_begin="0, 0" pads_end="0, 0" auto_pad="explicit"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>832</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>128</dim>
+					<dim>832</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="310" name="inception_5b/pool_proj/Dims2342" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 128, 1, 1" offset="11946862" size="256"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="311" name="inception_5b/pool_proj" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="inception_5b/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="312" name="inception_5b/relu_pool_proj" type="ReLU" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="inception_5b/pool_proj">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="313" name="inception_5b/output" type="Concat" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>384</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+				<port id="3" precision="FP16">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP16" names="inception_5b/output">
+					<dim>1</dim>
+					<dim>1024</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="314" name="pool5/7x7_s1" type="AvgPool" version="opset1">
+			<data kernel="7, 7" strides="1, 1" pads_begin="0, 0" pads_end="0, 0" exclude-pad="false" auto_pad="explicit" rounding_type="ceil"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1024</dim>
+					<dim>7</dim>
+					<dim>7</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="pool5/7x7_s1">
+					<dim>1</dim>
+					<dim>1024</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="315" name="loss3/classifier/flatten_fc_input/value" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="11947118" size="16"/>
+			<output>
+				<port id="0" precision="I64">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="316" name="loss3/classifier/flatten_fc_input" type="Reshape" version="opset1">
+			<data special_zero="true"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1024</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="pool5/7x7_s1">
+					<dim>1</dim>
+					<dim>1024</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="317" name="loss3/classifier/weights_transpose" type="Const" version="opset1">
+			<data element_type="f16" shape="1000, 1024" offset="11947134" size="2048000"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1000</dim>
+					<dim>1024</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="318" name="loss3/classifier/WithoutBiases" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1024</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1000</dim>
+					<dim>1024</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="319" name="151" type="Const" version="opset1">
+			<data element_type="f16" shape="1, 1000" offset="13995134" size="2000"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="320" name="loss3/classifier" type="Add" version="opset1">
+			<data auto_broadcast="numpy"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16" names="loss3/classifier">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="321" name="prob" type="SoftMax" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16" names="prob">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="322" name="prob/sink_port_0" type="Result" version="opset1">
+			<input>
+				<port id="0" precision="FP16">
+					<dim>1</dim>
+					<dim>1000</dim>
+				</port>
+			</input>
+		</layer>
+	</layers>
+	<edges>
+		<edge from-layer="0" from-port="0" to-layer="2" to-port="0"/>
+		<edge from-layer="1" from-port="0" to-layer="2" to-port="1"/>
+		<edge from-layer="2" from-port="2" to-layer="4" to-port="0"/>
+		<edge from-layer="3" from-port="0" to-layer="4" to-port="1"/>
+		<edge from-layer="4" from-port="2" to-layer="6" to-port="0"/>
+		<edge from-layer="5" from-port="0" to-layer="6" to-port="1"/>
+		<edge from-layer="6" from-port="2" to-layer="7" to-port="0"/>
+		<edge from-layer="7" from-port="1" to-layer="8" to-port="0"/>
+		<edge from-layer="8" from-port="1" to-layer="10" to-port="0"/>
+		<edge from-layer="9" from-port="0" to-layer="10" to-port="1"/>
+		<edge from-layer="10" from-port="2" to-layer="12" to-port="0"/>
+		<edge from-layer="11" from-port="0" to-layer="12" to-port="1"/>
+		<edge from-layer="12" from-port="2" to-layer="14" to-port="0"/>
+		<edge from-layer="13" from-port="0" to-layer="14" to-port="1"/>
+		<edge from-layer="14" from-port="2" to-layer="15" to-port="0"/>
+		<edge from-layer="15" from-port="1" to-layer="17" to-port="0"/>
+		<edge from-layer="16" from-port="0" to-layer="17" to-port="1"/>
+		<edge from-layer="17" from-port="2" to-layer="19" to-port="0"/>
+		<edge from-layer="18" from-port="0" to-layer="19" to-port="1"/>
+		<edge from-layer="19" from-port="2" to-layer="20" to-port="0"/>
+		<edge from-layer="20" from-port="1" to-layer="22" to-port="0"/>
+		<edge from-layer="21" from-port="0" to-layer="22" to-port="1"/>
+		<edge from-layer="22" from-port="2" to-layer="23" to-port="0"/>
+		<edge from-layer="23" from-port="1" to-layer="40" to-port="0"/>
+		<edge from-layer="23" from-port="1" to-layer="49" to-port="0"/>
+		<edge from-layer="23" from-port="1" to-layer="30" to-port="0"/>
+		<edge from-layer="23" from-port="1" to-layer="25" to-port="0"/>
+		<edge from-layer="24" from-port="0" to-layer="25" to-port="1"/>
+		<edge from-layer="25" from-port="2" to-layer="27" to-port="0"/>
+		<edge from-layer="26" from-port="0" to-layer="27" to-port="1"/>
+		<edge from-layer="27" from-port="2" to-layer="28" to-port="0"/>
+		<edge from-layer="28" from-port="1" to-layer="55" to-port="0"/>
+		<edge from-layer="29" from-port="0" to-layer="30" to-port="1"/>
+		<edge from-layer="30" from-port="2" to-layer="32" to-port="0"/>
+		<edge from-layer="31" from-port="0" to-layer="32" to-port="1"/>
+		<edge from-layer="32" from-port="2" to-layer="33" to-port="0"/>
+		<edge from-layer="33" from-port="1" to-layer="35" to-port="0"/>
+		<edge from-layer="34" from-port="0" to-layer="35" to-port="1"/>
+		<edge from-layer="35" from-port="2" to-layer="37" to-port="0"/>
+		<edge from-layer="36" from-port="0" to-layer="37" to-port="1"/>
+		<edge from-layer="37" from-port="2" to-layer="38" to-port="0"/>
+		<edge from-layer="38" from-port="1" to-layer="55" to-port="1"/>
+		<edge from-layer="39" from-port="0" to-layer="40" to-port="1"/>
+		<edge from-layer="40" from-port="2" to-layer="42" to-port="0"/>
+		<edge from-layer="41" from-port="0" to-layer="42" to-port="1"/>
+		<edge from-layer="42" from-port="2" to-layer="43" to-port="0"/>
+		<edge from-layer="43" from-port="1" to-layer="45" to-port="0"/>
+		<edge from-layer="44" from-port="0" to-layer="45" to-port="1"/>
+		<edge from-layer="45" from-port="2" to-layer="47" to-port="0"/>
+		<edge from-layer="46" from-port="0" to-layer="47" to-port="1"/>
+		<edge from-layer="47" from-port="2" to-layer="48" to-port="0"/>
+		<edge from-layer="48" from-port="1" to-layer="55" to-port="2"/>
+		<edge from-layer="49" from-port="1" to-layer="51" to-port="0"/>
+		<edge from-layer="50" from-port="0" to-layer="51" to-port="1"/>
+		<edge from-layer="51" from-port="2" to-layer="53" to-port="0"/>
+		<edge from-layer="52" from-port="0" to-layer="53" to-port="1"/>
+		<edge from-layer="53" from-port="2" to-layer="54" to-port="0"/>
+		<edge from-layer="54" from-port="1" to-layer="55" to-port="3"/>
+		<edge from-layer="55" from-port="4" to-layer="57" to-port="0"/>
+		<edge from-layer="55" from-port="4" to-layer="62" to-port="0"/>
+		<edge from-layer="55" from-port="4" to-layer="81" to-port="0"/>
+		<edge from-layer="55" from-port="4" to-layer="72" to-port="0"/>
+		<edge from-layer="56" from-port="0" to-layer="57" to-port="1"/>
+		<edge from-layer="57" from-port="2" to-layer="59" to-port="0"/>
+		<edge from-layer="58" from-port="0" to-layer="59" to-port="1"/>
+		<edge from-layer="59" from-port="2" to-layer="60" to-port="0"/>
+		<edge from-layer="60" from-port="1" to-layer="87" to-port="0"/>
+		<edge from-layer="61" from-port="0" to-layer="62" to-port="1"/>
+		<edge from-layer="62" from-port="2" to-layer="64" to-port="0"/>
+		<edge from-layer="63" from-port="0" to-layer="64" to-port="1"/>
+		<edge from-layer="64" from-port="2" to-layer="65" to-port="0"/>
+		<edge from-layer="65" from-port="1" to-layer="67" to-port="0"/>
+		<edge from-layer="66" from-port="0" to-layer="67" to-port="1"/>
+		<edge from-layer="67" from-port="2" to-layer="69" to-port="0"/>
+		<edge from-layer="68" from-port="0" to-layer="69" to-port="1"/>
+		<edge from-layer="69" from-port="2" to-layer="70" to-port="0"/>
+		<edge from-layer="70" from-port="1" to-layer="87" to-port="1"/>
+		<edge from-layer="71" from-port="0" to-layer="72" to-port="1"/>
+		<edge from-layer="72" from-port="2" to-layer="74" to-port="0"/>
+		<edge from-layer="73" from-port="0" to-layer="74" to-port="1"/>
+		<edge from-layer="74" from-port="2" to-layer="75" to-port="0"/>
+		<edge from-layer="75" from-port="1" to-layer="77" to-port="0"/>
+		<edge from-layer="76" from-port="0" to-layer="77" to-port="1"/>
+		<edge from-layer="77" from-port="2" to-layer="79" to-port="0"/>
+		<edge from-layer="78" from-port="0" to-layer="79" to-port="1"/>
+		<edge from-layer="79" from-port="2" to-layer="80" to-port="0"/>
+		<edge from-layer="80" from-port="1" to-layer="87" to-port="2"/>
+		<edge from-layer="81" from-port="1" to-layer="83" to-port="0"/>
+		<edge from-layer="82" from-port="0" to-layer="83" to-port="1"/>
+		<edge from-layer="83" from-port="2" to-layer="85" to-port="0"/>
+		<edge from-layer="84" from-port="0" to-layer="85" to-port="1"/>
+		<edge from-layer="85" from-port="2" to-layer="86" to-port="0"/>
+		<edge from-layer="86" from-port="1" to-layer="87" to-port="3"/>
+		<edge from-layer="87" from-port="4" to-layer="88" to-port="0"/>
+		<edge from-layer="88" from-port="1" to-layer="90" to-port="0"/>
+		<edge from-layer="88" from-port="1" to-layer="114" to-port="0"/>
+		<edge from-layer="88" from-port="1" to-layer="105" to-port="0"/>
+		<edge from-layer="88" from-port="1" to-layer="95" to-port="0"/>
+		<edge from-layer="89" from-port="0" to-layer="90" to-port="1"/>
+		<edge from-layer="90" from-port="2" to-layer="92" to-port="0"/>
+		<edge from-layer="91" from-port="0" to-layer="92" to-port="1"/>
+		<edge from-layer="92" from-port="2" to-layer="93" to-port="0"/>
+		<edge from-layer="93" from-port="1" to-layer="120" to-port="0"/>
+		<edge from-layer="94" from-port="0" to-layer="95" to-port="1"/>
+		<edge from-layer="95" from-port="2" to-layer="97" to-port="0"/>
+		<edge from-layer="96" from-port="0" to-layer="97" to-port="1"/>
+		<edge from-layer="97" from-port="2" to-layer="98" to-port="0"/>
+		<edge from-layer="98" from-port="1" to-layer="100" to-port="0"/>
+		<edge from-layer="99" from-port="0" to-layer="100" to-port="1"/>
+		<edge from-layer="100" from-port="2" to-layer="102" to-port="0"/>
+		<edge from-layer="101" from-port="0" to-layer="102" to-port="1"/>
+		<edge from-layer="102" from-port="2" to-layer="103" to-port="0"/>
+		<edge from-layer="103" from-port="1" to-layer="120" to-port="1"/>
+		<edge from-layer="104" from-port="0" to-layer="105" to-port="1"/>
+		<edge from-layer="105" from-port="2" to-layer="107" to-port="0"/>
+		<edge from-layer="106" from-port="0" to-layer="107" to-port="1"/>
+		<edge from-layer="107" from-port="2" to-layer="108" to-port="0"/>
+		<edge from-layer="108" from-port="1" to-layer="110" to-port="0"/>
+		<edge from-layer="109" from-port="0" to-layer="110" to-port="1"/>
+		<edge from-layer="110" from-port="2" to-layer="112" to-port="0"/>
+		<edge from-layer="111" from-port="0" to-layer="112" to-port="1"/>
+		<edge from-layer="112" from-port="2" to-layer="113" to-port="0"/>
+		<edge from-layer="113" from-port="1" to-layer="120" to-port="2"/>
+		<edge from-layer="114" from-port="1" to-layer="116" to-port="0"/>
+		<edge from-layer="115" from-port="0" to-layer="116" to-port="1"/>
+		<edge from-layer="116" from-port="2" to-layer="118" to-port="0"/>
+		<edge from-layer="117" from-port="0" to-layer="118" to-port="1"/>
+		<edge from-layer="118" from-port="2" to-layer="119" to-port="0"/>
+		<edge from-layer="119" from-port="1" to-layer="120" to-port="3"/>
+		<edge from-layer="120" from-port="4" to-layer="122" to-port="0"/>
+		<edge from-layer="120" from-port="4" to-layer="127" to-port="0"/>
+		<edge from-layer="120" from-port="4" to-layer="146" to-port="0"/>
+		<edge from-layer="120" from-port="4" to-layer="137" to-port="0"/>
+		<edge from-layer="121" from-port="0" to-layer="122" to-port="1"/>
+		<edge from-layer="122" from-port="2" to-layer="124" to-port="0"/>
+		<edge from-layer="123" from-port="0" to-layer="124" to-port="1"/>
+		<edge from-layer="124" from-port="2" to-layer="125" to-port="0"/>
+		<edge from-layer="125" from-port="1" to-layer="152" to-port="0"/>
+		<edge from-layer="126" from-port="0" to-layer="127" to-port="1"/>
+		<edge from-layer="127" from-port="2" to-layer="129" to-port="0"/>
+		<edge from-layer="128" from-port="0" to-layer="129" to-port="1"/>
+		<edge from-layer="129" from-port="2" to-layer="130" to-port="0"/>
+		<edge from-layer="130" from-port="1" to-layer="132" to-port="0"/>
+		<edge from-layer="131" from-port="0" to-layer="132" to-port="1"/>
+		<edge from-layer="132" from-port="2" to-layer="134" to-port="0"/>
+		<edge from-layer="133" from-port="0" to-layer="134" to-port="1"/>
+		<edge from-layer="134" from-port="2" to-layer="135" to-port="0"/>
+		<edge from-layer="135" from-port="1" to-layer="152" to-port="1"/>
+		<edge from-layer="136" from-port="0" to-layer="137" to-port="1"/>
+		<edge from-layer="137" from-port="2" to-layer="139" to-port="0"/>
+		<edge from-layer="138" from-port="0" to-layer="139" to-port="1"/>
+		<edge from-layer="139" from-port="2" to-layer="140" to-port="0"/>
+		<edge from-layer="140" from-port="1" to-layer="142" to-port="0"/>
+		<edge from-layer="141" from-port="0" to-layer="142" to-port="1"/>
+		<edge from-layer="142" from-port="2" to-layer="144" to-port="0"/>
+		<edge from-layer="143" from-port="0" to-layer="144" to-port="1"/>
+		<edge from-layer="144" from-port="2" to-layer="145" to-port="0"/>
+		<edge from-layer="145" from-port="1" to-layer="152" to-port="2"/>
+		<edge from-layer="146" from-port="1" to-layer="148" to-port="0"/>
+		<edge from-layer="147" from-port="0" to-layer="148" to-port="1"/>
+		<edge from-layer="148" from-port="2" to-layer="150" to-port="0"/>
+		<edge from-layer="149" from-port="0" to-layer="150" to-port="1"/>
+		<edge from-layer="150" from-port="2" to-layer="151" to-port="0"/>
+		<edge from-layer="151" from-port="1" to-layer="152" to-port="3"/>
+		<edge from-layer="152" from-port="4" to-layer="169" to-port="0"/>
+		<edge from-layer="152" from-port="4" to-layer="178" to-port="0"/>
+		<edge from-layer="152" from-port="4" to-layer="159" to-port="0"/>
+		<edge from-layer="152" from-port="4" to-layer="154" to-port="0"/>
+		<edge from-layer="153" from-port="0" to-layer="154" to-port="1"/>
+		<edge from-layer="154" from-port="2" to-layer="156" to-port="0"/>
+		<edge from-layer="155" from-port="0" to-layer="156" to-port="1"/>
+		<edge from-layer="156" from-port="2" to-layer="157" to-port="0"/>
+		<edge from-layer="157" from-port="1" to-layer="184" to-port="0"/>
+		<edge from-layer="158" from-port="0" to-layer="159" to-port="1"/>
+		<edge from-layer="159" from-port="2" to-layer="161" to-port="0"/>
+		<edge from-layer="160" from-port="0" to-layer="161" to-port="1"/>
+		<edge from-layer="161" from-port="2" to-layer="162" to-port="0"/>
+		<edge from-layer="162" from-port="1" to-layer="164" to-port="0"/>
+		<edge from-layer="163" from-port="0" to-layer="164" to-port="1"/>
+		<edge from-layer="164" from-port="2" to-layer="166" to-port="0"/>
+		<edge from-layer="165" from-port="0" to-layer="166" to-port="1"/>
+		<edge from-layer="166" from-port="2" to-layer="167" to-port="0"/>
+		<edge from-layer="167" from-port="1" to-layer="184" to-port="1"/>
+		<edge from-layer="168" from-port="0" to-layer="169" to-port="1"/>
+		<edge from-layer="169" from-port="2" to-layer="171" to-port="0"/>
+		<edge from-layer="170" from-port="0" to-layer="171" to-port="1"/>
+		<edge from-layer="171" from-port="2" to-layer="172" to-port="0"/>
+		<edge from-layer="172" from-port="1" to-layer="174" to-port="0"/>
+		<edge from-layer="173" from-port="0" to-layer="174" to-port="1"/>
+		<edge from-layer="174" from-port="2" to-layer="176" to-port="0"/>
+		<edge from-layer="175" from-port="0" to-layer="176" to-port="1"/>
+		<edge from-layer="176" from-port="2" to-layer="177" to-port="0"/>
+		<edge from-layer="177" from-port="1" to-layer="184" to-port="2"/>
+		<edge from-layer="178" from-port="1" to-layer="180" to-port="0"/>
+		<edge from-layer="179" from-port="0" to-layer="180" to-port="1"/>
+		<edge from-layer="180" from-port="2" to-layer="182" to-port="0"/>
+		<edge from-layer="181" from-port="0" to-layer="182" to-port="1"/>
+		<edge from-layer="182" from-port="2" to-layer="183" to-port="0"/>
+		<edge from-layer="183" from-port="1" to-layer="184" to-port="3"/>
+		<edge from-layer="184" from-port="4" to-layer="186" to-port="0"/>
+		<edge from-layer="184" from-port="4" to-layer="210" to-port="0"/>
+		<edge from-layer="184" from-port="4" to-layer="191" to-port="0"/>
+		<edge from-layer="184" from-port="4" to-layer="201" to-port="0"/>
+		<edge from-layer="185" from-port="0" to-layer="186" to-port="1"/>
+		<edge from-layer="186" from-port="2" to-layer="188" to-port="0"/>
+		<edge from-layer="187" from-port="0" to-layer="188" to-port="1"/>
+		<edge from-layer="188" from-port="2" to-layer="189" to-port="0"/>
+		<edge from-layer="189" from-port="1" to-layer="216" to-port="0"/>
+		<edge from-layer="190" from-port="0" to-layer="191" to-port="1"/>
+		<edge from-layer="191" from-port="2" to-layer="193" to-port="0"/>
+		<edge from-layer="192" from-port="0" to-layer="193" to-port="1"/>
+		<edge from-layer="193" from-port="2" to-layer="194" to-port="0"/>
+		<edge from-layer="194" from-port="1" to-layer="196" to-port="0"/>
+		<edge from-layer="195" from-port="0" to-layer="196" to-port="1"/>
+		<edge from-layer="196" from-port="2" to-layer="198" to-port="0"/>
+		<edge from-layer="197" from-port="0" to-layer="198" to-port="1"/>
+		<edge from-layer="198" from-port="2" to-layer="199" to-port="0"/>
+		<edge from-layer="199" from-port="1" to-layer="216" to-port="1"/>
+		<edge from-layer="200" from-port="0" to-layer="201" to-port="1"/>
+		<edge from-layer="201" from-port="2" to-layer="203" to-port="0"/>
+		<edge from-layer="202" from-port="0" to-layer="203" to-port="1"/>
+		<edge from-layer="203" from-port="2" to-layer="204" to-port="0"/>
+		<edge from-layer="204" from-port="1" to-layer="206" to-port="0"/>
+		<edge from-layer="205" from-port="0" to-layer="206" to-port="1"/>
+		<edge from-layer="206" from-port="2" to-layer="208" to-port="0"/>
+		<edge from-layer="207" from-port="0" to-layer="208" to-port="1"/>
+		<edge from-layer="208" from-port="2" to-layer="209" to-port="0"/>
+		<edge from-layer="209" from-port="1" to-layer="216" to-port="2"/>
+		<edge from-layer="210" from-port="1" to-layer="212" to-port="0"/>
+		<edge from-layer="211" from-port="0" to-layer="212" to-port="1"/>
+		<edge from-layer="212" from-port="2" to-layer="214" to-port="0"/>
+		<edge from-layer="213" from-port="0" to-layer="214" to-port="1"/>
+		<edge from-layer="214" from-port="2" to-layer="215" to-port="0"/>
+		<edge from-layer="215" from-port="1" to-layer="216" to-port="3"/>
+		<edge from-layer="216" from-port="4" to-layer="233" to-port="0"/>
+		<edge from-layer="216" from-port="4" to-layer="242" to-port="0"/>
+		<edge from-layer="216" from-port="4" to-layer="223" to-port="0"/>
+		<edge from-layer="216" from-port="4" to-layer="218" to-port="0"/>
+		<edge from-layer="217" from-port="0" to-layer="218" to-port="1"/>
+		<edge from-layer="218" from-port="2" to-layer="220" to-port="0"/>
+		<edge from-layer="219" from-port="0" to-layer="220" to-port="1"/>
+		<edge from-layer="220" from-port="2" to-layer="221" to-port="0"/>
+		<edge from-layer="221" from-port="1" to-layer="248" to-port="0"/>
+		<edge from-layer="222" from-port="0" to-layer="223" to-port="1"/>
+		<edge from-layer="223" from-port="2" to-layer="225" to-port="0"/>
+		<edge from-layer="224" from-port="0" to-layer="225" to-port="1"/>
+		<edge from-layer="225" from-port="2" to-layer="226" to-port="0"/>
+		<edge from-layer="226" from-port="1" to-layer="228" to-port="0"/>
+		<edge from-layer="227" from-port="0" to-layer="228" to-port="1"/>
+		<edge from-layer="228" from-port="2" to-layer="230" to-port="0"/>
+		<edge from-layer="229" from-port="0" to-layer="230" to-port="1"/>
+		<edge from-layer="230" from-port="2" to-layer="231" to-port="0"/>
+		<edge from-layer="231" from-port="1" to-layer="248" to-port="1"/>
+		<edge from-layer="232" from-port="0" to-layer="233" to-port="1"/>
+		<edge from-layer="233" from-port="2" to-layer="235" to-port="0"/>
+		<edge from-layer="234" from-port="0" to-layer="235" to-port="1"/>
+		<edge from-layer="235" from-port="2" to-layer="236" to-port="0"/>
+		<edge from-layer="236" from-port="1" to-layer="238" to-port="0"/>
+		<edge from-layer="237" from-port="0" to-layer="238" to-port="1"/>
+		<edge from-layer="238" from-port="2" to-layer="240" to-port="0"/>
+		<edge from-layer="239" from-port="0" to-layer="240" to-port="1"/>
+		<edge from-layer="240" from-port="2" to-layer="241" to-port="0"/>
+		<edge from-layer="241" from-port="1" to-layer="248" to-port="2"/>
+		<edge from-layer="242" from-port="1" to-layer="244" to-port="0"/>
+		<edge from-layer="243" from-port="0" to-layer="244" to-port="1"/>
+		<edge from-layer="244" from-port="2" to-layer="246" to-port="0"/>
+		<edge from-layer="245" from-port="0" to-layer="246" to-port="1"/>
+		<edge from-layer="246" from-port="2" to-layer="247" to-port="0"/>
+		<edge from-layer="247" from-port="1" to-layer="248" to-port="3"/>
+		<edge from-layer="248" from-port="4" to-layer="249" to-port="0"/>
+		<edge from-layer="249" from-port="1" to-layer="275" to-port="0"/>
+		<edge from-layer="249" from-port="1" to-layer="266" to-port="0"/>
+		<edge from-layer="249" from-port="1" to-layer="256" to-port="0"/>
+		<edge from-layer="249" from-port="1" to-layer="251" to-port="0"/>
+		<edge from-layer="250" from-port="0" to-layer="251" to-port="1"/>
+		<edge from-layer="251" from-port="2" to-layer="253" to-port="0"/>
+		<edge from-layer="252" from-port="0" to-layer="253" to-port="1"/>
+		<edge from-layer="253" from-port="2" to-layer="254" to-port="0"/>
+		<edge from-layer="254" from-port="1" to-layer="281" to-port="0"/>
+		<edge from-layer="255" from-port="0" to-layer="256" to-port="1"/>
+		<edge from-layer="256" from-port="2" to-layer="258" to-port="0"/>
+		<edge from-layer="257" from-port="0" to-layer="258" to-port="1"/>
+		<edge from-layer="258" from-port="2" to-layer="259" to-port="0"/>
+		<edge from-layer="259" from-port="1" to-layer="261" to-port="0"/>
+		<edge from-layer="260" from-port="0" to-layer="261" to-port="1"/>
+		<edge from-layer="261" from-port="2" to-layer="263" to-port="0"/>
+		<edge from-layer="262" from-port="0" to-layer="263" to-port="1"/>
+		<edge from-layer="263" from-port="2" to-layer="264" to-port="0"/>
+		<edge from-layer="264" from-port="1" to-layer="281" to-port="1"/>
+		<edge from-layer="265" from-port="0" to-layer="266" to-port="1"/>
+		<edge from-layer="266" from-port="2" to-layer="268" to-port="0"/>
+		<edge from-layer="267" from-port="0" to-layer="268" to-port="1"/>
+		<edge from-layer="268" from-port="2" to-layer="269" to-port="0"/>
+		<edge from-layer="269" from-port="1" to-layer="271" to-port="0"/>
+		<edge from-layer="270" from-port="0" to-layer="271" to-port="1"/>
+		<edge from-layer="271" from-port="2" to-layer="273" to-port="0"/>
+		<edge from-layer="272" from-port="0" to-layer="273" to-port="1"/>
+		<edge from-layer="273" from-port="2" to-layer="274" to-port="0"/>
+		<edge from-layer="274" from-port="1" to-layer="281" to-port="2"/>
+		<edge from-layer="275" from-port="1" to-layer="277" to-port="0"/>
+		<edge from-layer="276" from-port="0" to-layer="277" to-port="1"/>
+		<edge from-layer="277" from-port="2" to-layer="279" to-port="0"/>
+		<edge from-layer="278" from-port="0" to-layer="279" to-port="1"/>
+		<edge from-layer="279" from-port="2" to-layer="280" to-port="0"/>
+		<edge from-layer="280" from-port="1" to-layer="281" to-port="3"/>
+		<edge from-layer="281" from-port="4" to-layer="283" to-port="0"/>
+		<edge from-layer="281" from-port="4" to-layer="307" to-port="0"/>
+		<edge from-layer="281" from-port="4" to-layer="288" to-port="0"/>
+		<edge from-layer="281" from-port="4" to-layer="298" to-port="0"/>
+		<edge from-layer="282" from-port="0" to-layer="283" to-port="1"/>
+		<edge from-layer="283" from-port="2" to-layer="285" to-port="0"/>
+		<edge from-layer="284" from-port="0" to-layer="285" to-port="1"/>
+		<edge from-layer="285" from-port="2" to-layer="286" to-port="0"/>
+		<edge from-layer="286" from-port="1" to-layer="313" to-port="0"/>
+		<edge from-layer="287" from-port="0" to-layer="288" to-port="1"/>
+		<edge from-layer="288" from-port="2" to-layer="290" to-port="0"/>
+		<edge from-layer="289" from-port="0" to-layer="290" to-port="1"/>
+		<edge from-layer="290" from-port="2" to-layer="291" to-port="0"/>
+		<edge from-layer="291" from-port="1" to-layer="293" to-port="0"/>
+		<edge from-layer="292" from-port="0" to-layer="293" to-port="1"/>
+		<edge from-layer="293" from-port="2" to-layer="295" to-port="0"/>
+		<edge from-layer="294" from-port="0" to-layer="295" to-port="1"/>
+		<edge from-layer="295" from-port="2" to-layer="296" to-port="0"/>
+		<edge from-layer="296" from-port="1" to-layer="313" to-port="1"/>
+		<edge from-layer="297" from-port="0" to-layer="298" to-port="1"/>
+		<edge from-layer="298" from-port="2" to-layer="300" to-port="0"/>
+		<edge from-layer="299" from-port="0" to-layer="300" to-port="1"/>
+		<edge from-layer="300" from-port="2" to-layer="301" to-port="0"/>
+		<edge from-layer="301" from-port="1" to-layer="303" to-port="0"/>
+		<edge from-layer="302" from-port="0" to-layer="303" to-port="1"/>
+		<edge from-layer="303" from-port="2" to-layer="305" to-port="0"/>
+		<edge from-layer="304" from-port="0" to-layer="305" to-port="1"/>
+		<edge from-layer="305" from-port="2" to-layer="306" to-port="0"/>
+		<edge from-layer="306" from-port="1" to-layer="313" to-port="2"/>
+		<edge from-layer="307" from-port="1" to-layer="309" to-port="0"/>
+		<edge from-layer="308" from-port="0" to-layer="309" to-port="1"/>
+		<edge from-layer="309" from-port="2" to-layer="311" to-port="0"/>
+		<edge from-layer="310" from-port="0" to-layer="311" to-port="1"/>
+		<edge from-layer="311" from-port="2" to-layer="312" to-port="0"/>
+		<edge from-layer="312" from-port="1" to-layer="313" to-port="3"/>
+		<edge from-layer="313" from-port="4" to-layer="314" to-port="0"/>
+		<edge from-layer="314" from-port="1" to-layer="316" to-port="0"/>
+		<edge from-layer="315" from-port="0" to-layer="316" to-port="1"/>
+		<edge from-layer="316" from-port="2" to-layer="318" to-port="0"/>
+		<edge from-layer="317" from-port="0" to-layer="318" to-port="1"/>
+		<edge from-layer="318" from-port="2" to-layer="320" to-port="0"/>
+		<edge from-layer="319" from-port="0" to-layer="320" to-port="1"/>
+		<edge from-layer="320" from-port="2" to-layer="321" to-port="0"/>
+		<edge from-layer="321" from-port="1" to-layer="322" to-port="0"/>
+	</edges>
+	<meta_data>
+		<MO_version value="2021.4.1-3926-14e67d86634-releases/2021/4"/>
+		<cli_parameters>
+			<caffe_parser_path value="DIR"/>
+			<data_type value="FP16"/>
+			<disable_nhwc_to_nchw value="False"/>
+			<disable_omitting_optional value="False"/>
+			<disable_resnet_optimization value="False"/>
+			<disable_weights_compression value="False"/>
+			<enable_concat_optimization value="False"/>
+			<enable_flattening_nested_params value="False"/>
+			<enable_ssd_gluoncv value="False"/>
+			<extensions value="DIR"/>
+			<framework value="caffe"/>
+			<freeze_placeholder_with_value value="{}"/>
+			<generate_deprecated_IR_V7 value="False"/>
+			<input value="data"/>
+			<input_model value="DIR/googlenet-v1.caffemodel"/>
+			<input_model_is_text value="False"/>
+			<input_proto value="DIR/googlenet-v1.prototxt"/>
+			<input_shape value="[1,3,224,224]"/>
+			<k value="DIR/CustomLayersMapping.xml"/>
+			<keep_shape_ops value="True"/>
+			<legacy_ir_generation value="False"/>
+			<legacy_mxnet_model value="False"/>
+			<log_level value="ERROR"/>
+			<mean_scale_values value="{'data': {'mean': array([104., 117., 123.]), 'scale': None}}"/>
+			<mean_values value="data[104.0,117.0,123.0]"/>
+			<model_name value="googlenet-v1"/>
+			<output value="['prob']"/>
+			<output_dir value="DIR"/>
+			<placeholder_data_types value="{}"/>
+			<placeholder_shapes value="{'data': array([  1,   3, 224, 224])}"/>
+			<progress value="False"/>
+			<remove_memory value="False"/>
+			<remove_output_softmax value="False"/>
+			<reverse_input_channels value="False"/>
+			<save_params_from_nd value="False"/>
+			<scale_values value="()"/>
+			<silent value="False"/>
+			<static_shape value="False"/>
+			<stream_output value="False"/>
+			<transform value=""/>
+			<unset unset_cli_parameters="batch, counts, disable_fusing, disable_gfusing, finegrain_fusing, input_checkpoint, input_meta_graph, input_symbol, mean_file, mean_file_offsets, move_to_preprocess, nd_prefix_name, pretrained_model_name, saved_model_dir, saved_model_tags, scale, tensorboard_logdir, tensorflow_custom_layer_libraries, tensorflow_custom_operations_config_update, tensorflow_object_detection_api_pipeline_config, tensorflow_use_custom_operations_config, transformations_config"/>
+		</cli_parameters>
+	</meta_data>
+</net>
