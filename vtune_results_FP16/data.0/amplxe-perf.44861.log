@@ -1,0 +1,13 @@
+Using CPUID GenuineIntel-6-CF-2
+DEBUGINFOD_URLS=
+Compression enabled, disabling build id collection at the end of the session.
+Lowering default frequency rate from 4000 to 3250.
+Please consider tweaking /proc/sys/kernel/perf_event_max_sample_rate.
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+Error:
+The sys_perf_event_open() syscall returned with 6 (No such device or address) for event (FRONTEND_RETIRED.DSB_MISS).
+/bin/dmesg | grep -i perf may provide additional information.
+

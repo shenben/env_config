@@ -1,0 +1,49 @@
+threads_spec: cpu
+Using CPUID GenuineIntel-6-CF-2
+DEBUGINFOD_URLS=
+Compression enabled, disabling build id collection at the end of the session.
+Lowering default frequency rate from 4000 to 3250.
+Please consider tweaking /proc/sys/kernel/perf_event_max_sample_rate.
+nr_threads: 8
+thread_masks[0]: 0x562130ab02f0: maps mask[8]: 0
+thread_masks[0]: 0x562130ab0300: affinity mask[8]: 0
+thread_masks[1]: 0x562130ab0310: maps mask[8]: 1
+thread_masks[1]: 0x562130ab0320: affinity mask[8]: 1
+thread_masks[2]: 0x562130ab0330: maps mask[8]: 2
+thread_masks[2]: 0x562130ab0340: affinity mask[8]: 2
+thread_masks[3]: 0x562130ab0350: maps mask[8]: 3
+thread_masks[3]: 0x562130ab0360: affinity mask[8]: 3
+thread_masks[4]: 0x562130ab0370: maps mask[8]: 4
+thread_masks[4]: 0x562130ab0380: affinity mask[8]: 4
+thread_masks[5]: 0x562130ab0390: maps mask[8]: 5
+thread_masks[5]: 0x562130ab03a0: affinity mask[8]: 5
+thread_masks[6]: 0x562130ab03b0: maps mask[8]: 6
+thread_masks[6]: 0x562130ab03c0: affinity mask[8]: 6
+thread_masks[7]: 0x562130ab03d0: maps mask[8]: 7
+thread_masks[7]: 0x562130ab03e0: affinity mask[8]: 7
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+mmap size 528384B
+threads[48145]: started on cpu1
+threads[48146]: started on cpu2
+threads[48147]: started on cpu3
+threads[48148]: started on cpu4
+threads[48150]: started on cpu5
+threads[48151]: started on cpu6
+threads[48154]: started on cpu7
+threads[47850]: started on cpu0
+
+48095:perf-sync:ready:TSC=5325193655922
+[ perf record: Woken up 29 times to write data ]
+threads[47850]: samples=11, wakes=5, transferred=1083312, compressed=247437
+threads[48145]: samples=9, wakes=5, transferred=1007064, compressed=231441
+threads[48146]: samples=11, wakes=6, transferred=1162568, compressed=258005
+threads[48147]: samples=8, wakes=5, transferred=980592, compressed=229097
+threads[48148]: samples=12, wakes=6, transferred=1122976, compressed=255454
+threads[48150]: samples=7, wakes=5, transferred=984480, compressed=228286
+threads[48151]: samples=12, wakes=6, transferred=1110968, compressed=251019
+threads[48154]: samples=8, wakes=5, transferred=965824, compressed=227151
+failed to write feature HYBRID_TOPOLOGY
+[ perf record: Captured and wrote 2.177 MB /root/env_config/vtune_results_FP16/data.0/system-wide.perf, compressed (original 8.028 MB, ratio is 4.366) ]
