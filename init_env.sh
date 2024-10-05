@@ -17,3 +17,8 @@ sudo mv l_openvino_toolkit_ubuntu22_2024.3.0.16041.1e3b88e4e3f_x86_64 /opt/intel
 cd /opt/intel/openvino_2024.3.0
 sudo -E ./install_dependencies/install_openvino_dependencies.sh
 source /opt/intel/openvino_2024.3.0/setupvars.sh
+
+
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
