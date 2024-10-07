@@ -19,6 +19,10 @@ sudo -E ./install_dependencies/install_openvino_dependencies.sh
 source /opt/intel/openvino_2024.3.0/setupvars.sh
 
 
-mkdir -p ~/miniconda3
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+# mkdir -p ~/miniconda3
+# wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+# bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+
+git clone https://github.com/oneapi-src/oneAPI-samples.git
+pip install matplotlib py-cpuinfo intel_extension_for_pytorch==1.13.100 torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 t
+ransformers transformers sentencepiece sacremoses
