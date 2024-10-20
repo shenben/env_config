@@ -28,3 +28,5 @@ pip install matplotlib py-cpuinfo intel_extension_for_pytorch==1.13.100 torch==1
 
 wget https://registrationcenter-download.intel.com/akdlm/IRC_NAS/d7e1fdb1-cfc7-40fb-bf46-3719e9372d67/l_oneapi_vtune_p_2024.3.0.31_offline.sh
 sudo sh ./l_oneapi_vtune_p_2024.3.0.31_offline.sh
+
+sudo apt-get install libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 #vtune-gui dependencies
